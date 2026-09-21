@@ -73,13 +73,10 @@ void main() {
         headers: {'some-header': 'some-value'},
       );
 
-      await client.send(http.MultipartRequest(
-        'GET',
-        Uri.https(
-          'other-example.com',
-          '/hello',
-        ),
-      )..headers.addAll({'some-header': 'other-value'}));
+      await client.send(
+        http.MultipartRequest('GET', Uri.https('other-example.com', '/hello'))
+          ..headers.addAll({'some-header': 'other-value'}),
+      );
 
       expect(receivedRequest, isNotNull);
       expect(receivedRequest?.headers['some-header'], equals('other-value'));
@@ -122,13 +119,7 @@ void main() {
       );
 
       await client.send(
-        http.StreamedRequest(
-          'GET',
-          Uri.https(
-            'other-example.com',
-            '/hello',
-          ),
-        )
+        http.StreamedRequest('GET', Uri.https('other-example.com', '/hello'))
           ..contentLength = 10
           ..sink.add([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
           ..sink.close()
@@ -143,9 +134,7 @@ void main() {
       );
     });
 
-    test(
-        "updateHeaderIf can prevent 'content-type': 'application/json' from being overriden in POST request",
-        () async {
+    test("updateHeaderIf can prevent 'content-type': 'application/json' from being overriden in POST request", () async {
       http.BaseRequest? receivedRequest;
       late RequestClient client = RequestClient(
         RequestTestClient((request) {

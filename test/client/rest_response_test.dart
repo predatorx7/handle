@@ -20,9 +20,7 @@ void main() {
       );
       expect(
         () => response.deserializeBody(),
-        throwsA(
-          isA<http.ClientException>(),
-        ),
+        throwsA(isA<http.ClientException>()),
       );
       expectLater(
         response.deserializeBodyAsync(),
@@ -30,9 +28,7 @@ void main() {
       );
       expect(
         () => response.deserializeBody<TodoModel>(),
-        throwsA(
-          isA<http.ClientException>(),
-        ),
+        throwsA(isA<http.ClientException>()),
       );
       expectLater(
         response.deserializeBodyAsync<TodoModel>(),
@@ -44,14 +40,11 @@ void main() {
       final modelJsonString = json.encode(model);
       final response = RestResponse.fromResponse(
         http.Response(modelJsonString, 200),
-        JsonModelSerializer(deserializers: {
-          JsonDeserializerOf<TodoModel>(TodoModel.fromJson),
-        }),
+        JsonModelSerializer(
+          deserializers: {JsonDeserializerOf<TodoModel>(TodoModel.fromJson)},
+        ),
       );
-      expect(
-        response.deserializeBody<TodoModel>(),
-        isA<TodoModel>(),
-      );
+      expect(response.deserializeBody<TodoModel>(), isA<TodoModel>());
       expectLater(
         response.deserializeBodyAsync<TodoModel>(),
         completion(isA<TodoModel>()),
@@ -62,17 +55,17 @@ void main() {
       final modelJsonString = json.encode(model);
       final response = RestResponse.fromResponse(
         http.Response(modelJsonString, 200),
-        JsonModelSerializer(deserializers: {
-          JsonDeserializerOf<TodoModel>((json) {
-            throw _TestException();
-          }),
-        }),
+        JsonModelSerializer(
+          deserializers: {
+            JsonDeserializerOf<TodoModel>((json) {
+              throw _TestException();
+            }),
+          },
+        ),
       );
       expect(
         () => response.deserializeBody<TodoModel>(),
-        throwsA(
-          isA<RestResponseException>(),
-        ),
+        throwsA(isA<RestResponseException>()),
       );
       expectLater(
         response.deserializeBodyAsync<TodoModel>(),

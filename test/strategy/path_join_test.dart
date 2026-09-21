@@ -7,12 +7,8 @@ void main() {
   group('joinUrls', () {
     test('Merge queryParameters', () {
       final mergedUri = joinUrls(
-        Uri(queryParameters: {
-          'hello': 'world',
-        }),
-        Uri(queryParameters: {
-          'foo': 'bar',
-        }),
+        Uri(queryParameters: {'hello': 'world'}),
+        Uri(queryParameters: {'foo': 'bar'}),
         (a, b) => PathJoinStrategy(a, b).resolve(),
       );
       expect(mergedUri.queryParameters['hello'], equals('world'));

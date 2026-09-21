@@ -14,28 +14,23 @@ void main() {
 
       final service = TodoService(client);
 
-      when(
-        client.send(any),
-      ).thenAnswer(
-        (_) async {
-          return http.StreamedResponse(
-            Stream.value(utf8.encode(
-                '{ "userId": 3, "id": 1, "title": "sit reprehenderit omnis quia", "completed": false }')),
-            200,
-          );
-        },
-      );
+      when(client.send(any)).thenAnswer((_) async {
+        return http.StreamedResponse(
+          Stream.value(
+            utf8.encode(
+              '{ "userId": 3, "id": 1, "title": "sit reprehenderit omnis quia", "completed": false }',
+            ),
+          ),
+          200,
+        );
+      });
 
       expect(service.getTodoById(1), completes);
 
-      when(
-        client.send(any),
-      ).thenAnswer(
-        (_) async {
-          return http.StreamedResponse(
-            Stream.value(
-              utf8.encode(
-                '''[
+      when(client.send(any)).thenAnswer((_) async {
+        return http.StreamedResponse(
+          Stream.value(
+            utf8.encode('''[
             {
               "userId": 3,
               "id": 48,
@@ -48,23 +43,17 @@ void main() {
               "title": "ut necessitatibus aut maiores debitis officia blanditiis velit et",
               "completed": false
             }
-          ]''',
-              ),
-            ),
-            200,
-          );
-        },
-      );
+          ]'''),
+          ),
+          200,
+        );
+      });
 
       expect(service.getTodos(), completes);
 
-      when(
-        client.send(any),
-      ).thenAnswer(
-        (_) async {
-          throw http.ClientException('test');
-        },
-      );
+      when(client.send(any)).thenAnswer((_) async {
+        throw http.ClientException('test');
+      });
 
       expectLater(service.getTodoById(1), throwsA(isA<http.ClientException>()));
     });

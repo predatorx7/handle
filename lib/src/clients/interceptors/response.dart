@@ -7,9 +7,7 @@ import '../../utils/unawaited_response.dart';
 import '../wrapper.dart';
 import 'exception.dart';
 
-typedef ResponseInterceptorCallback = FutureOr<void> Function(
-  StreamedResponse,
-);
+typedef ResponseInterceptorCallback = FutureOr<void> Function(StreamedResponse);
 
 class ResponseInterceptorException extends InterceptorException {
   const ResponseInterceptorException(
@@ -48,10 +46,7 @@ mixin ResponseInterceptorMixin {
 /// {@category Clients}
 class ResponseInterceptorClient extends WrapperClient
     with ResponseInterceptorMixin {
-  ResponseInterceptorClient(
-    super.client,
-    this.interceptors,
-  );
+  ResponseInterceptorClient(super.client, this.interceptors);
 
   final Iterable<ResponseInterceptorCallback> interceptors;
 

@@ -32,13 +32,8 @@ class TodoModel {
 
 void main() async {
   final runner = BenchmarkRunner(
-    asyncBenchmarks: [
-      AsyncJsonModelSerializerBenchmark(),
-    ],
-    benchmarks: [
-      JsonModelSerializerBenchmark(),
-      JsonDecodeBenchmark(),
-    ],
+    asyncBenchmarks: [AsyncJsonModelSerializerBenchmark()],
+    benchmarks: [JsonModelSerializerBenchmark(), JsonDecodeBenchmark()],
   );
 
   await runner.run();
@@ -46,15 +41,17 @@ void main() async {
 
 class AsyncJsonModelSerializerBenchmark extends AsyncBenchmarkBase {
   AsyncJsonModelSerializerBenchmark()
-      : super('AsyncJsonModelSerializerBenchmark');
+    : super('AsyncJsonModelSerializerBenchmark');
 
   late JsonModelSerializer serializer;
 
   @override
   Future<void> setup() async {
-    serializer = JsonModelSerializer(deserializers: {
-      JsonDeserializerOf<TodoModel>((json) => TodoModel.fromJson(json)),
-    });
+    serializer = JsonModelSerializer(
+      deserializers: {
+        JsonDeserializerOf<TodoModel>((json) => TodoModel.fromJson(json)),
+      },
+    );
   }
 
   @override
@@ -71,9 +68,11 @@ class JsonModelSerializerBenchmark extends BenchmarkBase {
 
   @override
   void setup() {
-    serializer = JsonModelSerializer(deserializers: {
-      JsonDeserializerOf<TodoModel>((json) => TodoModel.fromJson(json)),
-    });
+    serializer = JsonModelSerializer(
+      deserializers: {
+        JsonDeserializerOf<TodoModel>((json) => TodoModel.fromJson(json)),
+      },
+    );
   }
 
   @override

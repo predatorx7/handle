@@ -41,23 +41,19 @@ void main() async {
     when: (response, count) async {
       return response.statusCode == 401 && await acquireToken();
     },
-    updateRequest: (
-      originalRequest,
-      lastRequest,
-      bodyStream,
-      response,
-      retryCount,
-    ) {
-      return lastRequest.createCopy(bodyStream())
-        ..headers['authorization'] = token;
-    },
+    updateRequest:
+        (originalRequest, lastRequest, bodyStream, response, retryCount) {
+          return lastRequest.createCopy(bodyStream())
+            ..headers['authorization'] = token;
+        },
   );
 
   // send request to localhost:8000/hello api that needs some authorization token
   client
-      .get(server.uri.replace(path: '/hello'), headers: {
-        'authorization': token,
-      })
+      .get(
+        server.uri.replace(path: '/hello'),
+        headers: {'authorization': token},
+      )
       .then((it) => print(it.body))
       .then((_) {
         client.close();

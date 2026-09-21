@@ -21,18 +21,12 @@ void main() {
         processForHttpBody(<Object, Object>{'hello': 'world'}),
         isA<Map<String, String>>(),
       );
-      expect(
-        processForHttpBody(<Object>[2, 3, 4, 5, 8]),
-        isA<List<int>>(),
-      );
+      expect(processForHttpBody(<Object>[2, 3, 4, 5, 8]), isA<List<int>>());
       expect(
         processForHttpBody(<Object, Object>{'hello': true}),
         isA<String>(),
       );
-      expect(
-        processForHttpBody(<Object>[2, true, '4', 5, 8]),
-        isA<String>(),
-      );
+      expect(processForHttpBody(<Object>[2, true, '4', 5, 8]), isA<String>());
       expect(processForHttpBody(_JsonEncodable()), isA<String>());
       expect(processForHttpBody([_JsonEncodable()]), isA<String>());
     });
@@ -41,7 +35,9 @@ void main() {
       expect(() => processForHttpBody({'true'}), throwsArgumentError);
       expect(() => processForHttpBody(_JsonUnencodable()), throwsArgumentError);
       expect(
-          () => processForHttpBody([_JsonUnencodable()]), throwsArgumentError);
+        () => processForHttpBody([_JsonUnencodable()]),
+        throwsArgumentError,
+      );
     });
   });
 }

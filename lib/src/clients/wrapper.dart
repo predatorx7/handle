@@ -39,16 +39,13 @@ abstract class WrapperClient extends BaseClient implements InnerClientWrapper {
   Client get inner {
     final client = _inner;
     if (client == null) {
-      throw ClientException(
-        'HTTP request failed. Client is already closed.',
-      );
+      throw ClientException('HTTP request failed. Client is already closed.');
     }
     return client;
   }
 
   @override
   @mustCallSuper
-
   /// Closes the client and cleans up any resources associated with it.
   ///
   /// It's important to close each client when it's done being used; failing to
@@ -70,10 +67,7 @@ abstract class WrapperClient extends BaseClient implements InnerClientWrapper {
   /// Note: [force] is `true` by default to keep this [close]'s default
   /// behaviour consistent with [Client.close] because [BaseClient.close]
   /// doesn't have a parameter to avoid closing its inner client.
-  void close({
-    bool force = true,
-    Client? keepAliveHttpClient,
-  }) {
+  void close({bool force = true, Client? keepAliveHttpClient}) {
     if (!force) return;
     final client = _inner;
     if (client == null || client == keepAliveHttpClient) return;

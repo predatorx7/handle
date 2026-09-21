@@ -5,16 +5,13 @@ import '../todo.dart';
 
 class JsonplaceholderService extends RestService {
   JsonplaceholderService()
-      : super(
-          RequestClient(
-            Client(),
-            url: Uri.https('jsonplaceholder.typicode.com'),
-          ),
-          // Pass a serializer here if you want it to be used only within this
-          // TodoService. If not null, this service will create a new serializer
-          // from this and [JsonModelSerializer.common].
-          serializer: null,
-        );
+    : super(
+        RequestClient(Client(), url: Uri.https('jsonplaceholder.typicode.com')),
+        // Pass a serializer here if you want it to be used only within this
+        // TodoService. If not null, this service will create a new serializer
+        // from this and [JsonModelSerializer.common].
+        serializer: null,
+      );
 
   Future<List<TodoModel>?> getTodos() {
     return client.get(Uri(path: '/todos')).dataAsync<List<TodoModel>>();

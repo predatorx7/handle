@@ -1,3 +1,7 @@
+## 0.5.0
+
+- Upgrade dependencies
+
 ## 0.4.0
 
 - Add [InterceptorClient.clientExceptionInterceptors] and [ClientExceptionInterceptorClient] to intercept exceptions that happen when sending a request

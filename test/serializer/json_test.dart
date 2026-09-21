@@ -24,9 +24,7 @@ void main() {
   group('JsonModelSerializer', () {
     test('addition', () {
       final serializer = JsonModelSerializer(
-        deserializers: {
-          JsonDeserializerOf<_A>(_A.fromJson),
-        },
+        deserializers: {JsonDeserializerOf<_A>(_A.fromJson)},
       );
 
       expect(serializer.contains<_A>(), isTrue);
@@ -50,14 +48,10 @@ void main() {
 
     test('merge', () {
       final serializerA = JsonModelSerializer(
-        deserializers: {
-          JsonDeserializerOf<_A>(_A.fromJson),
-        },
+        deserializers: {JsonDeserializerOf<_A>(_A.fromJson)},
       );
       final serializerB = JsonModelSerializer(
-        deserializers: {
-          JsonDeserializerOf<_B>(_B.fromJson),
-        },
+        deserializers: {JsonDeserializerOf<_B>(_B.fromJson)},
       );
 
       final serializerAB = serializerA.merge(serializerB);

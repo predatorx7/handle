@@ -1,5 +1,6 @@
 import 'package:http/http.dart' show Client;
 import 'package:handle/src/utils/utils.dart';
+
 import '../clients/request.dart' show RequestClient;
 import '../uri.dart' show PathJoinCallback;
 
@@ -24,13 +25,8 @@ abstract class PathJoinStrategy {
   /// [otherUri] is inherited from wrapped (or child) [Client]s.
   Iterable<String> resolve();
 
-  static PathJoinCallback onJoinPath(
-    PathJoinStrategyCallback strategy,
-  ) {
-    Iterable<String> resolve(
-      Uri otherUri,
-      Uri currentUri,
-    ) {
+  static PathJoinCallback onJoinPath(PathJoinStrategyCallback strategy) {
+    Iterable<String> resolve(Uri otherUri, Uri currentUri) {
       return strategy(otherUri, currentUri).resolve();
     }
 
@@ -38,34 +34,24 @@ abstract class PathJoinStrategy {
   }
 
   /// {@macro DefaultPathJoinStrategy}
-  const factory PathJoinStrategy(
-    Uri otherUri,
-    Uri currentUri,
-  ) = DefaultPathJoinStrategy;
+  const factory PathJoinStrategy(Uri otherUri, Uri currentUri) =
+      DefaultPathJoinStrategy;
 
   /// {@macro CurrentOnlyPathJoinStrategy}
-  const factory PathJoinStrategy.currentOnly(
-    Uri otherUri,
-    Uri currentUri,
-  ) = CurrentOnlyPathJoinStrategy;
+  const factory PathJoinStrategy.currentOnly(Uri otherUri, Uri currentUri) =
+      CurrentOnlyPathJoinStrategy;
 
   /// {@macro OtherOnlyPathJoinStrategy}
-  const factory PathJoinStrategy.otherOnly(
-    Uri otherUri,
-    Uri currentUri,
-  ) = OtherOnlyPathJoinStrategy;
+  const factory PathJoinStrategy.otherOnly(Uri otherUri, Uri currentUri) =
+      OtherOnlyPathJoinStrategy;
 
   /// {@macro OtherFirstPathJoinStrategy}
-  const factory PathJoinStrategy.otherFirst(
-    Uri otherUri,
-    Uri currentUri,
-  ) = OtherFirstPathJoinStrategy;
+  const factory PathJoinStrategy.otherFirst(Uri otherUri, Uri currentUri) =
+      OtherFirstPathJoinStrategy;
 
   /// {@macro CurrentFirstPathJoinStrategy}
-  const factory PathJoinStrategy.currentFirst(
-    Uri otherUri,
-    Uri currentUri,
-  ) = CurrentFirstPathJoinStrategy;
+  const factory PathJoinStrategy.currentFirst(Uri otherUri, Uri currentUri) =
+      CurrentFirstPathJoinStrategy;
 }
 
 abstract class _PathJoinStrategy implements PathJoinStrategy {
@@ -92,14 +78,9 @@ class DefaultPathJoinStrategy extends _PathJoinStrategy {
   Iterable<String> resolve() {
     final hasHostInOriginal = !isNullOrBlank(otherUri.host);
     if (hasHostInOriginal) {
-      return [
-        ...otherUri.pathSegments,
-      ];
+      return [...otherUri.pathSegments];
     }
-    return [
-      ...currentUri.pathSegments,
-      ...otherUri.pathSegments,
-    ];
+    return [...currentUri.pathSegments, ...otherUri.pathSegments];
   }
 }
 
@@ -136,10 +117,7 @@ class OtherFirstPathJoinStrategy extends _PathJoinStrategy {
 
   @override
   Iterable<String> resolve() {
-    return [
-      ...otherUri.pathSegments,
-      ...currentUri.pathSegments,
-    ];
+    return [...otherUri.pathSegments, ...currentUri.pathSegments];
   }
 }
 
@@ -152,9 +130,6 @@ class CurrentFirstPathJoinStrategy extends _PathJoinStrategy {
 
   @override
   Iterable<String> resolve() {
-    return [
-      ...currentUri.pathSegments,
-      ...otherUri.pathSegments,
-    ];
+    return [...currentUri.pathSegments, ...otherUri.pathSegments];
   }
 }

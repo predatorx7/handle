@@ -33,7 +33,9 @@ mixin ClientExceptionInterceptorMixin {
   ) async {
     final clientExceptionInterceptors = this.clientExceptionInterceptors;
     if (clientExceptionInterceptors == null ||
-        clientExceptionInterceptors.isEmpty) return;
+        clientExceptionInterceptors.isEmpty) {
+      return;
+    }
 
     for (final interceptor in clientExceptionInterceptors) {
       try {
@@ -53,16 +55,13 @@ mixin ClientExceptionInterceptorMixin {
 /// {@category Clients}
 class ClientExceptionInterceptorClient extends WrapperClient
     with ClientExceptionInterceptorMixin {
-  ClientExceptionInterceptorClient(
-    super.client,
-    this.interceptors,
-  );
+  ClientExceptionInterceptorClient(super.client, this.interceptors);
 
   final Iterable<ClientExceptionInterceptorCallback> interceptors;
 
   @override
   Iterable<ClientExceptionInterceptorCallback>
-      get clientExceptionInterceptors => interceptors;
+  get clientExceptionInterceptors => interceptors;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {

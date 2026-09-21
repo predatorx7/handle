@@ -6,9 +6,7 @@ import 'package:meta/meta.dart';
 import '../wrapper.dart';
 import 'exception.dart';
 
-typedef RequestInterceptorCallback = FutureOr<void> Function(
-  BaseRequest,
-);
+typedef RequestInterceptorCallback = FutureOr<void> Function(BaseRequest);
 
 class RequestInterceptorException extends InterceptorException {
   const RequestInterceptorException(
@@ -46,10 +44,7 @@ mixin RequestInterceptorMixin {
 /// {@category Clients}
 class RequestInterceptorClient extends WrapperClient
     with RequestInterceptorMixin {
-  RequestInterceptorClient(
-    super.client,
-    this.interceptors,
-  );
+  RequestInterceptorClient(super.client, this.interceptors);
 
   final Iterable<RequestInterceptorCallback> interceptors;
 

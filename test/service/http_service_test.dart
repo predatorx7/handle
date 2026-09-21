@@ -27,10 +27,7 @@ class TestWrapperClient extends WrapperClient {
   bool isClosed = false;
 
   @override
-  void close({
-    bool force = true,
-    http.Client? keepAliveHttpClient,
-  }) {
+  void close({bool force = true, http.Client? keepAliveHttpClient}) {
     isClosed = true;
     return super.close(force: force, keepAliveHttpClient: keepAliveHttpClient);
   }
@@ -45,9 +42,7 @@ void main() {
   });
   group('HttpService', () {
     test('invalid creation', () {
-      final service = HttpService<RequestClient>(
-        http.Client(),
-      );
+      final service = HttpService<RequestClient>(http.Client());
 
       expect(() => service.client, throwsA(isA<HttpServiceException>()));
     });

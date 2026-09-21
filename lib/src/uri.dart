@@ -13,11 +13,7 @@ typedef PathJoinCallback = Iterable<String> Function(
 ///
 /// Merging of paths is decided with the [onJoinPath] callback. Check [PathJoinStrategy]
 /// for more details.
-Uri joinUrls(
-  Uri other,
-  Uri? current,
-  PathJoinCallback onJoinPath,
-) {
+Uri joinUrls(Uri other, Uri? current, PathJoinCallback onJoinPath) {
   if (current == null) return other;
 
   return Uri(
@@ -25,10 +21,7 @@ Uri joinUrls(
     userInfo: whereStringNotBlankElseNull([other.userInfo, current.userInfo]),
     host: whereStringNotBlankElseNull([other.host, current.host]),
     port: other.host.isNotEmpty ? other.port : current.port,
-    pathSegments: onJoinPath(
-      other,
-      current,
-    ),
+    pathSegments: onJoinPath(other, current),
     queryParameters: mergeMapIfNotEmptyElseNull([
       other.queryParameters,
       current.queryParameters,

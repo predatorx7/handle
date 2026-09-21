@@ -72,9 +72,7 @@ void main() {
         throw Exception('Fake error');
       });
 
-      final client = Handle.client(
-        testClient,
-      );
+      final client = Handle.client(testClient);
 
       await expectLater(
         client.send(http.Request('GET', Uri())),
@@ -84,22 +82,24 @@ void main() {
       expect(retryCount, equals(1));
     });
 
-    test('throws HandleRetryLimitExceededException when retried to many times',
-        () async {
-      final testClient = http_testing.MockClient((request) async {
-        return http.Response(request.method, 500);
-      });
+    test(
+      'throws HandleRetryLimitExceededException when retried to many times',
+      () async {
+        final testClient = http_testing.MockClient((request) async {
+          return http.Response(request.method, 500);
+        });
 
-      final client = Handle.client(
-        testClient,
-        when: (response, retries) => true,
-      );
+        final client = Handle.client(
+          testClient,
+          when: (response, retries) => true,
+        );
 
-      await expectLater(
-        client.send(http.Request('GET', Uri())),
-        throwsA(isA<HandleRetryLimitExceededException>()),
-      );
-    });
+        await expectLater(
+          client.send(http.Request('GET', Uri())),
+          throwsA(isA<HandleRetryLimitExceededException>()),
+        );
+      },
+    );
 
     group('async deserialization', () {
       late TestServer server;
@@ -118,9 +118,12 @@ void main() {
 
       test('by RestResponse should run synchronously', () {
         expectLater(
-          Isolate.run(() => Handle.client(http.Client())
-              .get(Uri.parse('http://localhost:8080/'))
-              .jsonBodyAsync),
+          Isolate.run(
+            () =>
+                Handle.client(http.Client())
+                    .get(Uri.parse('http://localhost:8080/'))
+                    .jsonBodyAsync,
+          ),
           completion(equals(true)),
         );
       });

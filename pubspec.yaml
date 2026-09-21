@@ -1,10 +1,10 @@
 name: handle
 description: A simple library for composing HTTP clients, creating services to make HTTP requests.
-version: 0.4.0
+version: 0.5.0
 repository: https://github.com/predatorx7/handle
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.13.0 <4.0.0'
 
 topics:
  - network
@@ -13,22 +13,23 @@ topics:
  - client
 
 dependencies:
-  async: ^2.11.0
-  collection: ^1.0.0
-  http: ">=0.13.0 <2.0.0"
-  meta: ^1.0.0
-  quiver: ^3.0.0
+  async: ^2.13.1
+  collection: ^1.19.1
+  http: ^1.6.0
+  meta: ^1.19.0
+  quiver: ^3.2.2
 
 dev_dependencies:
-  benchmark_harness: ^2.2.1
-  build_runner: ^2.3.3
-  lints: ">=2.0.0 <7.0.0"
-  mockito: ^5.4.0
-  test: ^1.21.0
+  benchmark_harness: ^2.4.0
+  build_runner: ^2.16.1
   http_client_conformance_tests:
     git: 
       url: https://github.com/dart-lang/http.git
       path: pkgs/http_client_conformance_tests/
-      ref: http-v1.2.2
-  shelf: ^1.4.1
+      ref: "066e158"
+  lints: ^6.1.0
+  mockito: ^5.8.1
+  shelf: ^1.4.2
   shelf_router: ^1.1.4
+  test: ^1.32.0
+ 

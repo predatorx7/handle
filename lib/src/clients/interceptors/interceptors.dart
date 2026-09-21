@@ -11,13 +11,17 @@ export 'response.dart';
 
 /// {@category Clients}
 class InterceptorClient extends WrapperClient
-    with RequestInterceptorMixin, ResponseInterceptorMixin, ClientExceptionInterceptorMixin {
+    with
+        RequestInterceptorMixin,
+        ResponseInterceptorMixin,
+        ClientExceptionInterceptorMixin {
   @override
   final Iterable<RequestInterceptorCallback>? requestInterceptors;
   @override
   final Iterable<ResponseInterceptorCallback>? responseInterceptors;
   @override
-  final Iterable<ClientExceptionInterceptorCallback>? clientExceptionInterceptors;
+  final Iterable<ClientExceptionInterceptorCallback>?
+  clientExceptionInterceptors;
 
   InterceptorClient(
     super.client, {

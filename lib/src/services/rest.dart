@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+
 import '../clients/request.dart';
 import '../clients/rest.dart';
 import '../serializer/json.dart';
@@ -49,21 +50,21 @@ class RestService extends HttpService<RestClient> {
     WrapperClientBuilder? builder,
     bool includeJsonContentTypeHeader = true,
   }) : super.fromConfig(
-          RestServiceConfig(
-            RequestClient(
-              client,
-              headers: includeJsonContentTypeHeader
-                  ? {'content-type': 'application/json; charset=utf-8'}
-                  : null,
-              updateHeaderIf: (requestHeaders, header) {
-                if (header.key == 'content-type') return true;
-                return updateHeaderIfAbsent(requestHeaders, header);
-              },
-            ),
-            builder,
-            serializer,
-          ),
-        );
+         RestServiceConfig(
+           RequestClient(
+             client,
+             headers: includeJsonContentTypeHeader
+                 ? {'content-type': 'application/json; charset=utf-8'}
+                 : null,
+             updateHeaderIf: (requestHeaders, header) {
+               if (header.key == 'content-type') return true;
+               return updateHeaderIfAbsent(requestHeaders, header);
+             },
+           ),
+           builder,
+           serializer,
+         ),
+       );
 
   RestService.fromConfig(RestServiceConfig super.config) : super.fromConfig();
 

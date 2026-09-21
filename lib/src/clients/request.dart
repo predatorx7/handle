@@ -58,13 +58,13 @@ class RequestClient extends WrapperClient {
     final newUrl = joinUrls(
       original.url,
       url,
-      PathJoinStrategy.onJoinPath(
-        pathJoinStrategy,
-      ),
+      PathJoinStrategy.onJoinPath(pathJoinStrategy),
     );
     final hasEqualUrls = original.url.toString() == newUrl.toString();
-    final hasEqualHeaders =
-        const MapEquality().equals(headers, original.headers);
+    final hasEqualHeaders = const MapEquality().equals(
+      headers,
+      original.headers,
+    );
     if (hasEqualUrls && hasEqualHeaders) return original;
     final BaseRequest request;
     // Todo: Check if copying based on Request Type is faster

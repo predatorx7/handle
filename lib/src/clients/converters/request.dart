@@ -6,9 +6,7 @@ import 'package:meta/meta.dart';
 import '../wrapper.dart';
 import 'exception.dart';
 
-typedef RequestConverterCallback = FutureOr<BaseRequest> Function(
-  BaseRequest,
-);
+typedef RequestConverterCallback = FutureOr<BaseRequest> Function(BaseRequest);
 
 class RequestConverterException extends ConverterException {
   const RequestConverterException(
@@ -48,10 +46,7 @@ mixin RequestConverterMixin {
 
 /// {@category Clients}
 class RequestConverterClient extends WrapperClient with RequestConverterMixin {
-  RequestConverterClient(
-    super.client,
-    this.converters,
-  );
+  RequestConverterClient(super.client, this.converters);
 
   final Iterable<RequestConverterCallback> converters;
 

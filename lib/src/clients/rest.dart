@@ -20,10 +20,7 @@ class RestResponseException extends ClientException {
     Uri? uri,
     this.innerException,
     this.innerStackTrace,
-  }) : super(
-          message,
-          uri,
-        );
+  }) : super(message, uri);
 
   @override
   String toString() {
@@ -47,8 +44,8 @@ class RestResponse extends Response {
     super.persistentConnection = true,
     super.reasonPhrase,
     JsonModelSerializer? serializer,
-  })  : serializer = JsonModelSerializer.common.merge(serializer),
-        super.bytes();
+  }) : serializer = JsonModelSerializer.common.merge(serializer),
+       super.bytes();
 
   final JsonModelSerializer serializer;
 
@@ -76,7 +73,7 @@ class RestResponse extends Response {
     return compute(() => tryDecodeJson(body));
   }
 
-  /// {@template RestResponse.deserializeBody<T>}
+  /// {@template RestResponse.deserializeBody&lt;T&gt;}
   /// Returns [T] by deserializing the response body to it.
   /// The response is deserialized synchronously.
   ///
@@ -98,7 +95,7 @@ class RestResponse extends Response {
     }
   }
 
-  /// {@template RestResponse.deserializeBodyAsync<T>}
+  /// {@template RestResponse.deserializeBodyAsync&lt;T&gt;}
   /// Returns [T] by deserializing the response body to it.
   /// The response is deserialized asynchronously in an isolate.
   ///
@@ -183,10 +180,7 @@ class RestClient extends WrapperClient {
   /// {@endtemplate}
   JsonModelSerializer? serializer;
 
-  RestClient(
-    super.inner, {
-    this.serializer,
-  });
+  RestClient(super.inner, {this.serializer});
 
   @override
   Future<RestResponse> head(Uri url, {Map<String, String>? headers}) =>
@@ -264,12 +258,9 @@ class RestClient extends WrapperClient {
     );
   }
 
-  Future<RestResponse> multipart(
-    MultipartRequest request,
-  ) {
-    return send(
-      request,
-    ).then((response) => RestResponse.fromStream(response, serializer));
+  Future<RestResponse> multipart(MultipartRequest request) {
+    return send(request)
+        .then((response) => RestResponse.fromStream(response, serializer));
   }
 
   Future<RestResponse> _makeRest(Future<Response> response) async {

@@ -60,10 +60,7 @@ mixin ResponseConverterMixin {
 /// {@category Clients}
 class ResponseConverterClient extends WrapperClient
     with ResponseConverterMixin {
-  ResponseConverterClient(
-    super.client,
-    this.converters,
-  );
+  ResponseConverterClient(super.client, this.converters);
 
   final Iterable<ResponseConverterCallback> converters;
 

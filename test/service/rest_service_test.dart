@@ -30,16 +30,12 @@ void main() {
         RestClient(
           NoopHttpClient(),
           serializer: JsonModelSerializer(
-            deserializers: {
-              JsonDeserializerOf<_A>(_A.fromJson),
-            },
+            deserializers: {JsonDeserializerOf<_A>(_A.fromJson)},
           ),
         ),
         null,
         JsonModelSerializer(
-          deserializers: {
-            JsonDeserializerOf<_B>(_B.fromJson),
-          },
+          deserializers: {JsonDeserializerOf<_B>(_B.fromJson)},
         ),
       );
       final builtClient = config.builder?.call(config.client);
@@ -51,20 +47,23 @@ void main() {
   group('RestService', () {
     test('creation with builder', () async {
       http.BaseRequest? receivedRequest;
-      final service = RestService(RequestTestClient((request) {
-        receivedRequest = request;
-      }), builder: (client) {
-        return RequestClient(
-          client,
-          url: Uri.https('example.com'),
-          headers: {'some-header': 'some-value'},
-        );
-      });
+      final service = RestService(
+        RequestTestClient((request) {
+          receivedRequest = request;
+        }),
+        builder: (client) {
+          return RequestClient(
+            client,
+            url: Uri.https('example.com'),
+            headers: {'some-header': 'some-value'},
+          );
+        },
+      );
 
-      await service.client.post(Uri(path: '/hello'), body: {
-        'hello': 'world',
-        'count': 1,
-      });
+      await service.client.post(
+        Uri(path: '/hello'),
+        body: {'hello': 'world', 'count': 1},
+      );
 
       expect(receivedRequest, isNotNull);
       expect(receivedRequest?.headers['some-header'], equals('some-value'));

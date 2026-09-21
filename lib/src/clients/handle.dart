@@ -72,19 +72,14 @@ typedef WhenRetriedCallback = FutureOr<void> Function(
   int retryCount,
 );
 
-typedef DelayCallback = Duration Function(
-  int retryCount,
-);
+typedef DelayCallback = Duration Function(int retryCount);
 
 const HANDLE_RETRY_MAX_LIMIT = 1000;
 
 abstract class HandleInterface {
   /// This is used to determine whether a request should be retried
   @protected
-  FutureOr<bool> retryRequestWhen(
-    BaseResponse response,
-    int retryCount,
-  );
+  FutureOr<bool> retryRequestWhen(BaseResponse response, int retryCount);
 
   /// This is used to determine whether a request should be retried when an
   /// error is thrown
@@ -139,10 +134,7 @@ abstract mixin class Handle
 
   @override
   @protected
-  FutureOr<bool> retryRequestWhen(
-    BaseResponse response,
-    int retryCount,
-  ) {
+  FutureOr<bool> retryRequestWhen(BaseResponse response, int retryCount) {
     return retryCount <= 3 && response.statusCode == 503;
   }
 
@@ -319,10 +311,7 @@ class HandleClient extends WrapperClient with Handle {
 
   @override
   @protected
-  FutureOr<bool> retryRequestWhen(
-    BaseResponse response,
-    int retryCount,
-  ) {
+  FutureOr<bool> retryRequestWhen(BaseResponse response, int retryCount) {
     final when = this.when;
     if (when != null) {
       return when(response, retryCount);

@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+
 import '../clients/wrapper.dart';
 
 typedef WrapperClientBuilder<T extends http.Client> = T Function(
@@ -10,10 +11,7 @@ class HttpServiceConfig<T extends http.Client> {
   final http.Client client;
   final WrapperClientBuilder<T>? builder;
 
-  const HttpServiceConfig(
-    this.client,
-    this.builder,
-  );
+  const HttpServiceConfig(this.client, this.builder);
 }
 
 class HttpServiceException implements Exception {
@@ -39,13 +37,8 @@ class HttpService<T extends http.Client> {
   /// requests.
   ///
   /// The [builder] can be used to wrap [client] with wrapper http [http.Client]s.
-  HttpService(
-    http.Client client, {
-    WrapperClientBuilder<T>? builder,
-  }) : config = HttpServiceConfig<T>(
-          client,
-          builder,
-        );
+  HttpService(http.Client client, {WrapperClientBuilder<T>? builder})
+    : config = HttpServiceConfig<T>(client, builder);
 
   HttpService.fromConfig(this.config);
 
@@ -76,16 +69,13 @@ class HttpService<T extends http.Client> {
     } else {
       final builtClient = client;
       if (builtClient is! T) {
-        throw HttpServiceException(
-          'The client should be of type `$T`',
-        );
+        throw HttpServiceException('The client should be of type `$T`');
       }
       return builtClient;
     }
   }
 
   @mustCallSuper
-
   /// Closes the service and cleans up any resources associated with it.
   /// It is important to call dispose() to release any resources that are being
   /// used by this REST service, such as the HTTP client.
@@ -95,9 +85,7 @@ class HttpService<T extends http.Client> {
   /// using the same client and don't want to close it. However, it is important
   /// to note that keeping the HTTP client alive can consume resources, so you
   /// should only do this if necessary.
-  void dispose({
-    bool keepHttpClientAlive = false,
-  }) {
+  void dispose({bool keepHttpClientAlive = false}) {
     final currentClient = client;
     if (keepHttpClientAlive && currentClient == config.client) return;
     if (currentClient is WrapperClient) {

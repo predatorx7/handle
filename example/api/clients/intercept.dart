@@ -13,15 +13,12 @@ void main() async {
   Object? interceptedException;
 
   final jsonPlaceholderClient = InterceptorClient(
-    RequestClient(
-      Client(),
-      url: Uri.https('someinvalidurl.example.org'),
-    ),
+    RequestClient(Client(), url: Uri.https('someinvalidurl.example.org')),
     clientExceptionInterceptors: [
       (request, error, stackTrace) {
         // getting intercepted error.
         interceptedException = error;
-      }
+      },
     ],
   );
 
@@ -34,7 +31,9 @@ void main() async {
       print(todo);
     }
   } catch (_) {
-    print('! some error did happen. (This was already intercepted in this example).');
+    print(
+      '! some error did happen. (This was already intercepted in this example).',
+    );
   } finally {
     print('* Intercepted exception: $interceptedException');
 

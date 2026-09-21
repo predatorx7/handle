@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:handle/src/utils/compute.dart';
 import 'package:quiver/core.dart' as quiver;
+
 import '../utils/utils.dart';
 
 typedef FromJsonCallback<T> = T? Function(dynamic json);

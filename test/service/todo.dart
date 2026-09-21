@@ -10,12 +10,7 @@ class TodoModel {
   const TodoModel(this.userId, this.id, this.title, this.completed);
 
   Map<String, Object?> toJson() {
-    return {
-      'userId': userId,
-      'id': id,
-      'title': title,
-      'completed': completed,
-    };
+    return {'userId': userId, 'id': id, 'title': title, 'completed': completed};
   }
 
   factory TodoModel.fromJson(dynamic json) {
@@ -36,15 +31,17 @@ class TodoModel {
 
 class TodoService extends RestService {
   TodoService([http.Client? client])
-      : super(
-          RequestClient(
-            client ?? http.Client(),
-            url: Uri.https('jsonplaceholder.typicode.com', '/todos'),
-          ),
-          serializer: JsonModelSerializer(deserializers: {
+    : super(
+        RequestClient(
+          client ?? http.Client(),
+          url: Uri.https('jsonplaceholder.typicode.com', '/todos'),
+        ),
+        serializer: JsonModelSerializer(
+          deserializers: {
             JsonDeserializerOf<TodoModel>((json) => TodoModel.fromJson(json)),
-          }),
-        );
+          },
+        ),
+      );
 
   Future<TodoModel?> getTodoById(int id) async {
     return client.get(Uri(path: '/$id')).dataAsync();
